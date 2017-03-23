@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "jest --watch",
-    "start": "webpack-dev-server",
+    "server": "webpack-dev-server",
+    "nodemon": "sudo nodemon --watch webpack.config.js ./node_modules/.bin/webpack-dev-server",
     "dashboard": "webpack-dashboard webpack-dev-server",
     "flow": "flow"
   },
