@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   context: resolve(__dirname, 'src'),
@@ -44,6 +45,10 @@ module.exports = {
           fallback: "style-loader",
           use: 'css-loader?importLoaders=1!postcss-loader'
         })
+      },
+      {
+        test: /\.(html)$/, 
+        use: "file-loader"
       }
     ]
   },
@@ -57,6 +62,11 @@ module.exports = {
     new ExtractTextPlugin({
       filename: 'styles/[name].bundle.css',
       allChunks: true
+    }),
+    new CleanWebpackPlugin(['dist', 'build'], {
+      verbose: true,
+      dry: false,
+      exclude: ['index.html']
     })
   ],
 };
