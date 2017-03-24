@@ -6,7 +6,7 @@ import {observer} from "mobx-react";
 export default class App extends React.Component {
   render() {
     return <div className={styles.app}>
-      <h1>Test MobX Dev Tools</h1>
+      <h1> --- Test MobX Dev Tools --- </h1>
       <p>{this.props.store.title}</p>
       <i>{this.props.store.author}</i>
       <br/>

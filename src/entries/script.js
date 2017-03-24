@@ -10,4 +10,4 @@ function bar(x): string {
 bar('Hello, world!');
 
 var str: number = 'hello world!';
-console.log(str);
+// console.log(str);

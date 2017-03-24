@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   context: resolve(__dirname, 'src'),
@@ -12,9 +13,11 @@ module.exports = {
     'main': ['./entries/index.js', './entries/script.js', './entries/test.js']
   },
   output: {
-    filename: 'scripts/[name].bundle.js',
+    filename: 'scripts/[name].[hash].bundle.js',
     path: resolve(__dirname, 'dist'),
-    publicPath: '/'
+    publicPath: '/',
+    chunkFilename: '[id].[hash].js',
+    library: '[name]'
   },
 
   devtool: 'inline-source-map',
@@ -47,8 +50,15 @@ module.exports = {
         })
       },
       {
-        test: /\.(html)$/, 
-        use: "file-loader"
+        test: /\.html$/,
+        use: [ {
+          loader: 'html-loader',
+          options: {
+            minimize: false,
+            removeComments: true,
+            collapseWhitespace: false
+          }
+        }],
       }
     ]
   },
@@ -67,6 +77,22 @@ module.exports = {
       verbose: true,
       dry: false,
       exclude: ['index.html']
-    })
+    }),
+    new HtmlWebpackPlugin({
+      template: 'templates/index.html',
+      chunks: [
+        'vendor',
+        'common',
+        'main'
+      ],
+      chunksSortMode: function(){
+        return 1;
+      },
+      inject: true
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common'
+    }),
+    new webpack.NoEmitOnErrorsPlugin()
   ],
 };
