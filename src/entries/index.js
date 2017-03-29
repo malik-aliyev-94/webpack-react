@@ -10,7 +10,7 @@ import DevTools from 'mobx-react-devtools';
 import '../styles/index.css'
 
 var store = new AppStore();
-
+// console.log(process.env.env);
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>

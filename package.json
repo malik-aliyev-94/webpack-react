@@ -8,7 +8,9 @@
     "server": "webpack-dev-server",
     "nodemon": "sudo nodemon --watch webpack.config.js ./node_modules/.bin/webpack-dev-server",
     "dashboard": "webpack-dashboard webpack-dev-server",
-    "flow": "flow"
+    "flow": "flow",
+    "prod": "webpack --env=production",
+    "dev": "webpack --env=development"
   },
   "author": "Malik Aliyev",
   "license": "ISC",
