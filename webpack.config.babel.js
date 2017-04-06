@@ -6,9 +6,9 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
 import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
+import project from "./project.config.js";
 
 export default function(env) {
-
     const production = env === "production";
     if (!production) env = "development";
 
@@ -149,12 +149,13 @@ export default function(env) {
         config['plugins'].push(new webpack.optimize.OccurrenceOrderPlugin());
     } else {
         // Development mode
-        config['entry']['vendor'] = ['react-hot-loader/patch', 'webpack-dev-server/client?http://localhost:8080', 'webpack/hot/only-dev-server'];
+        config['entry']['vendor'] = ['react-hot-loader/patch', 'webpack-dev-server/client?'+project['dev']['host']+':'+project['dev']['port'], 'webpack/hot/only-dev-server'];
         config['devServer'] = {
             hot: true,
             contentBase: resolve(__dirname, 'dist'),
             publicPath: '/',
-            open: true
+            open: true,
+            port: project['dev']['port']
         };
         config['plugins'].push(new webpack.HotModuleReplacementPlugin());
         config['plugins'].push(new DashboardPlugin());
