@@ -45,7 +45,20 @@ export default function (env) {
             rules: [{
                     test: /\.(js|jsx)$/,
                     use: [{
-                        'loader': 'babel-loader',
+                        loader: 'babel-loader',
+                        options: {
+                            babelrc: false,
+                            presets: [
+                                ["es2015", {"modules": false}],
+                                "stage-2",
+                                "react"
+                            ],
+                            plugins: [
+                                "react-hot-loader/babel",
+                                "transform-decorators-legacy",
+                                "transform-class-properties"
+                            ]
+                        }
                     }],
                     exclude: /node_modules/
                 },
@@ -168,7 +181,8 @@ export default function (env) {
             contentBase: resolve(__dirname, 'dist'),
             publicPath: '/',
             // open: true,
-            port: project['dev']['port']
+            port: project['dev']['port'],
+            // stats: 'errors-only'
         };
         config['plugins'].push(new webpack.HotModuleReplacementPlugin());
         config['plugins'].push(new DashboardPlugin());
