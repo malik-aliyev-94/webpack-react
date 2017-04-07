@@ -7,7 +7,6 @@ import { AppContainer } from 'react-hot-loader';
 import App from '../components/App/App';
 import AppStore from '../stores/AppStore';
 import DevTools from 'mobx-react-devtools';
-import '../styles/index.css'
 
 var store = new AppStore();
 // console.log(process.env.env);
@@ -16,7 +15,7 @@ const render = (Component) => {
     <AppContainer>
       <div>
         <Component store={data} />
-        <DevTools />
+        {/*<DevTools />*/}
       </div>
     </AppContainer>,
     document.getElementById('root')

@@ -1,1 +1,2 @@
-console.log('Common JS');
+import 'jquery';
+import 'bootstrap/dist/js/bootstrap';

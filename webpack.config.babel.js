@@ -1,4 +1,6 @@
-import {resolve} from 'path';
+import {
+    resolve
+} from 'path';
 import webpack from 'webpack';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import DashboardPlugin from 'webpack-dashboard/plugin';
@@ -8,7 +10,7 @@ import AssetsPlugin from 'assets-webpack-plugin';
 import WebpackBuildNotifierPlugin from 'webpack-build-notifier';
 import project from "./project.config.js";
 
-export default function(env) {
+export default function (env) {
     const production = env === "production";
     if (!production) env = "development";
 
@@ -42,9 +44,9 @@ export default function(env) {
         module: {
             rules: [{
                     test: /\.(js|jsx)$/,
-                    use: [
-                        'babel-loader',
-                    ],
+                    use: [{
+                        'loader': 'babel-loader',
+                    }],
                     exclude: /node_modules/
                 },
                 {
@@ -60,6 +62,12 @@ export default function(env) {
                             removeComments: true,
                             collapseWhitespace: false
                         }
+                    }],
+                },
+                {
+                    test: /\.pug$/,
+                    use: [{
+                        loader: 'pug-loader'
                     }],
                 },
                 {
@@ -79,16 +87,16 @@ export default function(env) {
             new CleanWebpackPlugin(['dist', 'build'], {
                 verbose: true,
                 dry: false,
-                exclude: ['index.html']
+                // exclude: ['index.html']
             }),
             new HtmlWebpackPlugin({
-                template: 'templates/index.html',
+                template: 'templates/index.pug',
                 chunks: [
                     'vendor',
                     'common',
                     'main'
                 ],
-                chunksSortMode: function() {
+                chunksSortMode: function () {
                     return 1;
                 },
                 inject: true,
@@ -121,6 +129,11 @@ export default function(env) {
                 suppressSuccess: true,
                 successSound: "Glass", //"Basso, Blow, Bottle, Frog, Funk, Glass, Hero, Morse, Ping, Pop, Purr, Sosumi, Submarine, Tink"
                 failureSound: "Basso"
+            }),
+            new webpack.ProvidePlugin({
+                jQuery: 'jquery',
+                $: 'jquery',
+                jquery: 'jquery'
             })
         ],
         // stats: "none"
@@ -149,12 +162,12 @@ export default function(env) {
         config['plugins'].push(new webpack.optimize.OccurrenceOrderPlugin());
     } else {
         // Development mode
-        config['entry']['vendor'] = ['react-hot-loader/patch', 'webpack-dev-server/client?'+project['dev']['host']+':'+project['dev']['port'], 'webpack/hot/only-dev-server'];
+        config['entry']['vendor'] = ['react-hot-loader/patch', 'webpack-dev-server/client?' + project['dev']['host'] + ':' + project['dev']['port'], 'webpack/hot/only-dev-server'];
         config['devServer'] = {
             hot: true,
             contentBase: resolve(__dirname, 'dist'),
             publicPath: '/',
-            open: true,
+            // open: true,
             port: project['dev']['port']
         };
         config['plugins'].push(new webpack.HotModuleReplacementPlugin());
