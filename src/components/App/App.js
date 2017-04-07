@@ -47,7 +47,7 @@ export default class App extends React.Component {
         Best check yo self, you're not looking too good.
       </Alert>
       <h1>
-        --- Test MobX Dev Tools ---=
+        --- Test MobX Dev Tools --
       </h1>
       <p>{this.props.store.title}</p>
       <i>{this.props.store.author}</i>

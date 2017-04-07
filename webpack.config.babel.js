@@ -80,7 +80,7 @@ export default function (env) {
         plugins: [
             new webpack.NamedModulesPlugin(),
             new ExtractTextPlugin({
-                filename: 'styles/[name].css',
+                filename: 'styles/[name].[hash].css',
                 allChunks: true,
                 disable: !production
             }),
