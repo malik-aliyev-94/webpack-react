@@ -85,6 +85,7 @@ export default function (env) {
                 },
                 {
                     test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
+                    // loader: 'file-loader?name=[path][name][hash].[ext]'
                     loader: 'file-loader?name=[path][name].[ext]'
                 }
             ]
